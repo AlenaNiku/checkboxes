@@ -100,6 +100,30 @@
 // select all the checkboxes from the dom first
 const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]')
 
+// create a variable to hold the value of the last checked checkbox
+let lastChecked
+
+// handleClick function that runs every time the user clicks on the chekbox
+function handleCheck(e) {
+  // check if the user had the shift key down
+  // AND check if they're checking it (vs unchecking)
+  let inBetween = false
+  if (e.shiftKey && this.checked) {
+    // loop over every single checkbox
+    checkboxes.forEach(checkbox => {
+      if (checkbox === this || checkbox === lastChecked) {
+        inBetween = !inBetween
+      }
+
+      if (inBetween) {
+        checkbox.checked = true
+      }
+    })
+  }
+
+  lastChecked = this
+}
+
 // attach an event listener to each checkbox that will run handleCheck function
 checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
 
